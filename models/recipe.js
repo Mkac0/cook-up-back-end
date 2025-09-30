@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const notesSchema = new mongoose.Schema(
+const commentsSchema = new mongoose.Schema(
   {
     text: {
       type: String,
@@ -38,13 +38,13 @@ const recipeSchema = new mongoose.Schema(
       type: [Object],         
     },
     instructions: {
-      type: [String],      
+      type: [Object],      
     },
     chefNotes:{
       type:String,
     },
     author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    notes: [notesSchema], 
+    comments: [commentsSchema], 
    },
    { timestamps: true }
 );
