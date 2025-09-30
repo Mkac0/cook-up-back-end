@@ -68,7 +68,36 @@ router.get("/:recipeId", verifyToken, async (req, res) => {
     res.status(500).json({ err: err.message });
   }
 });
-//Delete recipeid
+
+//Put :recipeId
+router.put("/:recipeId", verifyToken, async (req, res) => {
+  try {
+    // Find the recipe:
+    const recipe = await Recipe.findById(req.params.recipeId);
+
+    // Check permissions:
+    if (!recipe.author.equals(req.user._id)) {
+      return res.status(403).send("You're not allowed to do that!");
+    }
+
+    // Update hoot:
+    const updatedRecipe = await Recipe.findByIdAndUpdate(
+      req.params.recipeId,
+      req.body,
+      { new: true }
+    );
+
+    // Append req.user to the author property:
+    updatedRecipe._doc.author = req.user;
+
+    // Issue JSON response:
+    res.status(200).json(updatedRecipe);
+  } catch (err) {
+    res.status(500).json({ err: err.message });
+  }
+});
+
+//Delete :recipeid
 router.delete("/:recipeId", verifyToken, async (req, res) => {
   try {
     const recipe = await Recipe.findById(req.params.recipeId);    
