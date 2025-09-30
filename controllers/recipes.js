@@ -8,7 +8,7 @@ const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 //Add a new recipe to database
 router.post("/", verifyToken, async (req, res) => {    
-    console.log("req.body = ",req.body);
+    //console.log("req.body = ",req.body);
     try {          
     const prompt = `
     You are a world-class chef. Your task is to create a delicious and easy-to-follow recipe.
@@ -32,14 +32,12 @@ router.post("/", verifyToken, async (req, res) => {
         topP: 0.95,
     },
   });    
-    const responseText = JSON.parse(response.text);
-    console.log("responseText = ",responseText);   
+    const responseText = await (JSON.parse(response.text));
+    //console.log("responseText = ",responseText);   
     responseText.author = req.user._id        
-    const newRecipe = (await Recipe.create(responseText));
-    console.log("newRecipe = ",newRecipe);        
-    //const text='Added recipe';
-    res.json({ generatedText: responseText });    
-    res.status(201).json(text);
+    const newRecipe = (await Recipe.create(responseText));    
+    //res.json({ generatedText: responseText });    
+    res.status(201).json({ generatedText: responseText });
   } catch (err) {
     res.status(500).json({ err: err.message });
   }
