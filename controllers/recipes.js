@@ -69,7 +69,7 @@ router.get("/:recipeId", verifyToken, async (req, res) => {
 });
 
 //Put :recipeId
-router.put("/:recipeId", verifyToken, async (req, res) => {
+router.put("/:recipeId/edit", verifyToken, async (req, res) => {
   try {
     // Find the recipe:
     const recipe = await Recipe.findById(req.params.recipeId);
