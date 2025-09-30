@@ -44,6 +44,7 @@ const recipeSchema = new mongoose.Schema(
       type:String,
     },
     author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    image: {type : String},
     comments: [commentsSchema], 
    },
    { timestamps: true }

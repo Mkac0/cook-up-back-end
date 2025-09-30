@@ -21,6 +21,7 @@ router.post("/", verifyToken, async (req, res) => {
     
     Generate a creative and appealing recipe. If some key ingredients are missing for a classic dish, feel free to suggest a creative alternative or a simpler version. The instructions should be clear for a home cook.
     
+    Return the recipe with an image.
     Return the recipe in the specified JSON format.
   `;
     const response = await ai.models.generateContent({
