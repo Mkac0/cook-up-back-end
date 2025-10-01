@@ -1,11 +1,13 @@
-// npm
-const dotenv = require('dotenv');
-dotenv.config();
+// Load environment variables from .env
+require('dotenv').config();
+
+// npm packages
 const express = require('express');
-const app = express();
 const mongoose = require('mongoose');
 const cors = require('cors');
 const logger = require('morgan');
+
+const app = express();
 
 // Import routers
 const authRouter = require('./controllers/auth');
@@ -13,12 +15,16 @@ const testJwtRouter = require('./controllers/test-jwt');
 const usersRouter = require('./controllers/users');
 const recipesRouter = require('./controllers/recipes');
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI);
+// Debug: check if MONGO_URI is loaded
+console.log("MONGO_URI from env is:", process.env.MONGO_URI);
 
-mongoose.connection.on('connected', () => {
-  console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
-});
+// Connect to MongoDB
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => console.log(`Connected to MongoDB ${mongoose.connection.name}.`))
+.catch(err => console.error("MongoDB connection error:", err));
 
 // Middleware
 app.use(cors());
@@ -31,7 +37,7 @@ app.use('/test-jwt', testJwtRouter);
 app.use('/users', usersRouter);
 app.use('/recipes', recipesRouter);
 
-// Start the server and listen on port 3000
+// Start the server
 app.listen(3000, () => {
   console.log('The express app is ready!');
 });
