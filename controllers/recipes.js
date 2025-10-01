@@ -7,7 +7,7 @@ const Recipe = require("../models/recipe.js");
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 //Add a new recipe to database
-router.post("/", verifyToken, async (req, res) => {    
+router.post("/new", verifyToken, async (req, res) => {    
     //console.log("req.body = ",req.body);
     try {          
     const prompt = `
