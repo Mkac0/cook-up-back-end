@@ -114,20 +114,18 @@ router.delete("/:recipeId", verifyToken, async (req, res) => {
 
 //Comments - CRUD
 //Post a comments
-router.post("/:recipeId/comments", verifyToken, async (req, res) => {
-  try {
-    
+router.post("/:recipeId/comments/new", verifyToken, async (req, res) => {  
+  try {        
     req.body.author = req.user._id;
-    const recipe = await Recipe.findById(req.params.recipeId);    
-    recipe.comments.push(req.body);
-    await recipe.save();
+    const recipe = await Recipe.findById(req.params.recipeId);         
+    const comment = {text:req.body.comments};
+    recipe.comments.push(comment);        
+    await recipe.save();    
 
     // Find the newly created comment:
-    const newComment = recipe.comments[recipe.comments.length - 1];
-    newComment._doc.author = req.user;    
-
-    // Respond with the newComment:
-    res.status(201).json(newComment);
+    const newComment = recipe.comments[recipe.comments.length - 1];    
+    newComment._doc.author = req.user;        
+    res.status(201).json(newComment);    
   } catch (err) {
     res.status(500).json({ err: err.message });
   }
