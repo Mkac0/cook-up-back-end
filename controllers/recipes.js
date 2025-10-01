@@ -32,15 +32,17 @@ router.post("/new", verifyToken, async (req, res) => {
         temperature: 0.8,
         topP: 0.95,
     },
-  });    
+  }); 
+  console.log(response);   
     const responseText = await (JSON.parse(response.text));
-    //console.log("responseText = ",responseText);   
+    console.log("responseText = ",responseText);   
     responseText.author = req.user._id        
     const newRecipe = (await Recipe.create(responseText));    
     //res.json({ generatedText: responseText });    
     res.status(201).json({ generatedText: responseText });
   } catch (err) {
-    res.status(500).json({ err: err.message });
+    console.log(err);
+    res.status(500).json({ err:'please try again!' });
   }
 });
 
