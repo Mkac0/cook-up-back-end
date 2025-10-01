@@ -7,7 +7,7 @@ const Recipe = require("../models/recipe.js");
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 //Add a new recipe to database
-router.post("/", verifyToken, async (req, res) => {    
+router.post("/new", verifyToken, async (req, res) => {    
     //console.log("req.body = ",req.body);
     try {          
     const prompt = `
@@ -21,6 +21,7 @@ router.post("/", verifyToken, async (req, res) => {
     
     Generate a creative and appealing recipe. If some key ingredients are missing for a classic dish, feel free to suggest a creative alternative or a simpler version. The instructions should be clear for a home cook.
     
+    Return the recipe with an image.
     Return the recipe in the specified JSON format.
   `;
     const response = await ai.models.generateContent({
@@ -68,7 +69,7 @@ router.get("/:recipeId", verifyToken, async (req, res) => {
 });
 
 //Put :recipeId
-router.put("/:recipeId", verifyToken, async (req, res) => {
+router.put("/:recipeId/edit", verifyToken, async (req, res) => {
   try {
     // Find the recipe:
     const recipe = await Recipe.findById(req.params.recipeId);
