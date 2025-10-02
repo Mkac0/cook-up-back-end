@@ -19,10 +19,7 @@ const recipesRouter = require('./controllers/recipes');
 console.log("MONGO_URI from env is:", process.env.MONGO_URI);
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+mongoose.connect(process.env.MONGO_URI)
 .then(() => console.log(`Connected to MongoDB ${mongoose.connection.name}.`))
 .catch(err => console.error("MongoDB connection error:", err));
 
