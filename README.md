@@ -1,30 +1,16 @@
-# Express JWT Auth Template
+# 🍳 Cook'Up (Backend)
 
-## About
+This is the backend repository for **Cook'Up**, a MERN Stack CRUD application that generates AI-powered recipes based on user-provided ingredients.  
 
-This repo is an Express JWT Auth template meant to be paired with a front-end app utilizing JWT tokens.
+For frontend details and setup instructions, please visit the [Cook'Up Frontend Repository](https://github.com/Mkac0/cook-up-front-end).
 
-## Getting started
+## 🛠️ Tech Overview  
 
-Fork and clone this repository to your local machine.
++ Node.js
++ Express.js
++ MongoDB & Mongoose
++ dontenv
 
-After moving into the cloned directory, run `npm i` to download the dependencies.
+## 🔗 Frontend Repository  
 
-Create a `.env` file in the root of the project:
-
-```bash
-touch .env
-```
-
-and add your MongoDB URI and a secret JWT string to it. Your MongoDB URI will look something like the first entry, but with your username and password:
-
-```plaintext
-MONGODB_URI=mongodb+srv://<username>:<password>@sei.azure.mongodb.net/myApp?retryWrites=true
-JWT_SECRET=supersecret
-```
-
-Start the app in your terminal with:
-
-``` sh
-npm run dev
-```
+👉 [Cook'Up Frontend Repo](https://github.com/Mkac0/cook-up-front-end)
