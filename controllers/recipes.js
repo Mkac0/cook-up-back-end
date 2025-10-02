@@ -120,7 +120,7 @@ router.post("/:recipeId/comments/new", verifyToken, async (req, res) => {
   try {        
     req.body.author = req.user._id;
     const recipe = await Recipe.findById(req.params.recipeId);         
-    const comment = {text:req.body.comments};
+    const comment = {text:req.body.text};
     recipe.comments.push(comment);        
     await recipe.save();    
 
@@ -134,19 +134,17 @@ router.post("/:recipeId/comments/new", verifyToken, async (req, res) => {
 });
 
 //Update comment
-router.put("/:recipeId/comments/:commentId", verifyToken, async (req, res) => {
+router.put("/:recipeId/comments/:commentId/edit", verifyToken, async (req, res) => { 
   try {
-    const recipe = await Recipe.findById(req.params.recipeId);
-    const comment = recipe.comments.id(req.params.commentId);
+    console.log("inside edit comment...");
 
-    // ensures the current user is the author of the comment
-    if (comment.author.toString() !== req.user._id) {
-      return res
-        .status(403)
-        .json({ message: "You are not authorized to edit this comment" });
-    }
+    const recipe = await Recipe.findById(req.params.recipeId);
+    const comment = recipe.comments.id(req.params.commentId);    
+    console.log("comment = ",comment);
 
     comment.text = req.body.text;
+    console.log("comment.text = ",comment.text);
+
     await recipe.save();
     res.status(200).json({ message: "Comment updated successfully" });
   } catch (err) {
@@ -155,20 +153,12 @@ router.put("/:recipeId/comments/:commentId", verifyToken, async (req, res) => {
 });
 
 //Delete comment
-router.delete("/:recipeId/comments/:commentId", verifyToken, async (req, res) => {
+router.delete("/:recipeId/comments/:commentId", verifyToken, async (req, res) => {  
   try {
    const recipe = await Recipe.findById(req.params.recipeId);
-   const comment = recipe.comments.id(req.params.commentId);
-
-    // ensures the current user is the author of the comment
-    if (comment.author.toString() !== req.user._id) {
-      return res
-        .status(403)
-        .json({ message: "You are not authorized to edit this comment" });
-    }
-
-    recipe.comments.remove({ _id: req.params.commentId });
-    await recipe.save();
+   const comment = recipe.comments.id(req.params.commentId);       
+    recipe.comments.remove({ _id: req.params.commentId });    
+    await recipe.save();    
     res.status(200).json({ message: "Comment deleted successfully" });
   } catch (err) {
     res.status(500).json({ err: err.message });
