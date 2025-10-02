@@ -13,4 +13,4 @@ For frontend details and setup instructions, please visit the [Cook'Up Frontend 
 
 ## 🔗 Frontend Repository  
 
-👉 [Cook'Up Frontend Repo](https://github.com/Mkac0/cook-up-back-end)
+👉 [Cook'Up Frontend Repo](https://github.com/Mkac0/cook-up-front-end)
